@@ -28,7 +28,8 @@ const PostingForm = ({ userObj }) => {
     e.preventDefault();
     if (userObj !== null) {
       let attachmentUrl = "";
-      if (attachmentUrl !== "") {
+
+      if (attachment !== "") {
         const attachmentRef = ref(
           firebaseStorage,
           `${userObj.uid}/${uuidv4()}`
@@ -38,6 +39,7 @@ const PostingForm = ({ userObj }) => {
           attachment,
           "data_url"
         );
+        console.log(response);
         attachmentUrl = await getDownloadURL(attachmentRef);
       }
       const postingObj = {
@@ -46,26 +48,16 @@ const PostingForm = ({ userObj }) => {
         createdDate: today,
         createdAt: Date.now(),
         creatorId: userObj.uid,
-        attachmentUrl,
+        // attachmentUrl,
       };
-      //인풋창이 빈칸이 아니어야 올릴 수 있게
-      //   if (newPosting !== "") {
-      //     await addDoc(collection(firestore, "postings"), postingObj);
-      //     setNewPosting("");
-      //     setAttachment("");
-      //   }
-      if (newPosting !== "") {
-        await addDoc(collection(firestore, "postings"), postingObj);
-        setNewPosting("");
-        setAttachment("");
-      }
+
+      await addDoc(collection(firestore, "postings"), postingObj);
+      setNewPosting("");
+      setAttachment("");
     } else {
       const confirmLogin = window.confirm("로그인하고 글을 남겨보세요!");
       if (confirmLogin) {
-        console.log("로그인해주세요");
-
-        // 문제발생원인 예상
-        // window.location.href = "/#/login";
+        window.location.href = "/#/login";
       }
     }
   };
@@ -89,6 +81,7 @@ const PostingForm = ({ userObj }) => {
       setAttachment(result);
     };
     reader.readAsDataURL(theFile);
+    console.log(attachment);
   };
 
   const onClearAttachment = () => {
@@ -110,7 +103,7 @@ const PostingForm = ({ userObj }) => {
         <input type="submit" value="올리기" />
         {attachment && (
           <div>
-            <img src={attachment} width="70px" height="70px" />
+            <img src={attachment} width="100px" />
             <button onClick={onClearAttachment}>지우기</button>
           </div>
         )}
