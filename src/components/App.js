@@ -43,8 +43,6 @@ function App() {
           setIsLoggedIn={setIsLoggedIn}
           userObj={userObj}
           refreshUser={refreshUser}
-          myPostings={myPostings}
-          setMyPostings={setMyPostings}
         />
       ) : (
         <div>일상 기록</div>

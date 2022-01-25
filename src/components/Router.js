@@ -30,7 +30,7 @@ const AppRouter = ({ isLoggedIn, setIsLogeedIn, userObj, refreshUser }) => {
             />
           }
         />
-        {isLoggedIn ? (
+        {userObj !== null ? (
           <Route
             path="/profile"
             element={<Profile userObj={userObj} refreshUser={refreshUser} />}
