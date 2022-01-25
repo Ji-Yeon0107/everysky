@@ -55,7 +55,6 @@ const Posting = ({ isOwner, posting }) => {
     setEditing((prev) => !prev);
   };
 
-  console.log(posting);
   return (
     <div>
       {editing && (
