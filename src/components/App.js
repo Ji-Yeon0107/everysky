@@ -16,6 +16,7 @@ function App() {
         setUserObj({
           displayName: user.displayName,
           uid: user.uid,
+          photoURL: user.photoURL,
         });
       } else {
         setUserObj(null);

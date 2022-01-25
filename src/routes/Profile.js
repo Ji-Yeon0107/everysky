@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import firebase from "fbase";
 import { getAuth, updateProfile } from "firebase/auth";
-import Postings from "components/Postings";
+import MyPostings from "components/MyPostings";
 import {
   getFirestore,
   collection,
@@ -9,6 +9,7 @@ import {
   where,
   query,
   orderBy,
+  getDoc,
 } from "firebase/firestore";
 
 const Profile = ({ userObj, refreshUser }) => {
@@ -16,20 +17,24 @@ const Profile = ({ userObj, refreshUser }) => {
   const firestore = getFirestore();
 
   const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
+  const [myPostings, setMyPostings] = useState([]);
 
-  //   const getMyPostings = async () => {
-  //     const q = query(
-  //       collection(firestore, "postings"),
-  //       where("creatorId", "==", userObj.uid),
-  //       orderBy("createdAt")
-  //     );
-  //   };
-  //   const a = await getDocs(q);
-  //   a.forEach((doc) => {});
+  const getMyPostings = async () => {
+    const q = query(
+      collection(firestore, "postings"),
+      where("creatorId", "==", userObj.uid),
+      orderBy("createdAt", "desc")
+    );
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc, index) => {
+      let docdata = querySnapshot.docs.map((doc) => doc.data());
+      setMyPostings(docdata);
+    });
+  };
 
-  //   useEffect(() => {
-  //     getMyPostings();
-  //   });
+  useEffect(() => {
+    getMyPostings();
+  }, []);
 
   const onChange = (event) => {
     const {
@@ -52,7 +57,8 @@ const Profile = ({ userObj, refreshUser }) => {
         <input onChange={onChange} type="text" value={newDisplayName} />
         <input type="submit" value="닉네임 수정하기" />
       </form>
-      <Postings userObj={userObj} />
+      {/* <Postings userObj={userObj} /> */}
+      <MyPostings userObj={userObj} myPostings={myPostings} />
     </div>
   );
 };

@@ -9,6 +9,7 @@ import {
   uploadString,
   getDownloadURL,
 } from "firebase/storage";
+import "style/posting.css";
 
 const PostingForm = ({ userObj }) => {
   const firestore = getFirestore();
@@ -89,7 +90,7 @@ const PostingForm = ({ userObj }) => {
 
   return (
     <>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} className="posting-form">
         <input
           type="text"
           value={newPosting}
@@ -98,8 +99,9 @@ const PostingForm = ({ userObj }) => {
           maxLength={120}
           required
         />
+        <input type="submit" value="✏️" />
         <input type="file" accept="image/*" onChange={onFileChange} />
-        <input type="submit" value="올리기" />
+
         {attachment && (
           <div>
             <img src={attachment} width="100px" />

@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Posting from "components/Posting";
 import firebase from "fbase";
-import { getFirestore, onSnapshot, collection } from "firebase/firestore";
+import {
+  getFirestore,
+  onSnapshot,
+  collection,
+  query,
+  getDocs,
+  orderBy,
+} from "firebase/firestore";
 
 const Postings = ({ userObj }) => {
   const firestore = getFirestore();
@@ -17,6 +24,21 @@ const Postings = ({ userObj }) => {
       //할당해준다
       setPostings(postingArray);
     });
+  }, []);
+
+  const orderPostings = async () => {
+    const q = query(
+      collection(firestore, "postings"),
+      orderBy("createdAt", "desc")
+    );
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc, index) => {
+      let docdata = querySnapshot.docs.map((doc) => doc.data());
+      setPostings(docdata);
+    });
+  };
+  useEffect(() => {
+    orderPostings();
   }, []);
 
   return (

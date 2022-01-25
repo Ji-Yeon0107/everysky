@@ -1,0 +1,4 @@
+.navi {
+  display: flex;
+  justify-content: space-between;
+}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import firebase from "fbase";
 import { getAuth, signOut } from "firebase/auth";
+import "style/navigation.css";
 
 const Navigation = ({ userObj, isLoggedIn }) => {
   const auth = getAuth();
@@ -20,9 +21,25 @@ const Navigation = ({ userObj, isLoggedIn }) => {
 
   return (
     <nav>
-      <ul>
+      <ul className="navi">
         <li>
-          <div>{isLoggedIn ? "프로필img" : "기본프로필img"}</div>
+          <div>
+            {isLoggedIn ? (
+              <img
+                src={userObj.photoURL}
+                width="50px"
+                height="50px"
+                alt="profile"
+              />
+            ) : (
+              <img
+                src="./anonymous.png"
+                width="50px"
+                height="50px"
+                alt="profile"
+              />
+            )}
+          </div>
           {isLoggedIn ? (
             <>
               <Link to="/profile">{userProfile}님 반가워요</Link>

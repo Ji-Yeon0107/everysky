@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import firebase from "fbase";
 import { getFirestore, deleteDoc, updateDoc, doc } from "firebase/firestore";
 import { getStorage, deleteObject, ref } from "firebase/storage";
+import "style/posting.css";
 
 const Posting = ({ isOwner, posting }) => {
   const firestore = getFirestore();
@@ -71,23 +72,23 @@ const Posting = ({ isOwner, posting }) => {
           <button onClick={toggleEditing}>취소</button>
         </>
       )}
-      <div>
-        <h4>{posting.text}</h4>
+      <div className="posting-box">
+        <h4 className="posting-text">{posting.text}</h4>
         <img
           onClick={onClickImage}
           className="attachmentImage"
           src={posting.attachmentUrl}
           width="100px"
         />
-        <div>작성자 : {posting.creator}</div>
-        <div>{getTimegap(posting)}</div>
+        <div className="posting-author">작성자 : {posting.creator}</div>
+        <div className="posting-time">{getTimegap(posting)}</div>
+        {isOwner && (
+          <div className="posting-button">
+            <button onClick={onDeleteClick}>삭제</button>
+            <button onClick={toggleEditing}>수정</button>
+          </div>
+        )}
       </div>
-      {isOwner && (
-        <>
-          <button onClick={onDeleteClick}>Delete Nweet</button>
-          <button onClick={toggleEditing}>Edit Nweet</button>
-        </>
-      )}
     </div>
   );
 };
