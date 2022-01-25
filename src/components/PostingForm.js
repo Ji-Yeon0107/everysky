@@ -39,7 +39,6 @@ const PostingForm = ({ userObj }) => {
           attachment,
           "data_url"
         );
-        console.log(response);
         attachmentUrl = await getDownloadURL(attachmentRef);
       }
       const postingObj = {
@@ -48,7 +47,7 @@ const PostingForm = ({ userObj }) => {
         createdDate: today,
         createdAt: Date.now(),
         creatorId: userObj.uid,
-        // attachmentUrl,
+        attachmentUrl,
       };
 
       await addDoc(collection(firestore, "postings"), postingObj);
