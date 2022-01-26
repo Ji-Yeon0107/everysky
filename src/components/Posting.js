@@ -19,11 +19,17 @@ const Posting = ({ isOwner, posting }) => {
   };
 
   const getTimegap = (a) => {
+    var minutegap = Math.floor((Date.now() - a.createdAt) / 60000);
+    var hourgap = Math.floor((Date.now() - a.createdAt) / 3600000);
     if (Date.now() - a.createdAt < 86400000) {
-      if (Math.floor((Date.now() - a.createdAt) / 60000) < 60) {
-        return <p>{Math.floor((Date.now() - a.createdAt) / 60000)}분 전</p>;
+      if (minutegap < 60) {
+        if (minutegap < 0) {
+          return <p> 0분 전</p>;
+        } else {
+          return <p>{minutegap}분 전</p>;
+        }
       } else {
-        return <p>{Math.floor((Date.now() - a.createdAt) / 3600000)}시간 전</p>;
+        return <p>{hourgap}시간 전</p>;
       }
     } else {
       return <p>{a.createdDate}</p>;
@@ -34,9 +40,12 @@ const Posting = ({ isOwner, posting }) => {
     event.preventDefault();
     await updateDoc(doc(firestore, "postings", `${posting.id}`), {
       text: postingEditing,
+      creator: posting.creator,
     });
+
     setEditing(false);
   };
+
   const onChange = (event) => {
     const {
       target: { value },
@@ -52,7 +61,8 @@ const Posting = ({ isOwner, posting }) => {
     }
   };
 
-  const toggleEditing = () => {
+  const toggleEditing = (e) => {
+    e.preventDefault();
     setEditing((prev) => !prev);
   };
 
@@ -60,7 +70,7 @@ const Posting = ({ isOwner, posting }) => {
     <div>
       {editing && (
         <>
-          <form onSubmit={onSubmit}>
+          <form onSubmit={onSubmit} className="edit">
             <input
               onChange={onChange}
               type="text"
@@ -69,7 +79,12 @@ const Posting = ({ isOwner, posting }) => {
             />
             <input type="submit" value="수정" />
           </form>
-          <button onClick={toggleEditing}>취소</button>
+          <input
+            type="submit"
+            value="취소"
+            className="edit-button"
+            onClick={toggleEditing}
+          />
         </>
       )}
       <div className="posting-box">

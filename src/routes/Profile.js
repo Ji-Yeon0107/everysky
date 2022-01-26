@@ -5,12 +5,12 @@ import MyPostings from "components/MyPostings";
 import {
   getFirestore,
   collection,
-  getDocs,
   where,
   query,
   orderBy,
-  getDoc,
+  onSnapshot,
 } from "firebase/firestore";
+import "style/profile.css";
 
 const Profile = ({ userObj, refreshUser }) => {
   const auth = getAuth();
@@ -25,10 +25,14 @@ const Profile = ({ userObj, refreshUser }) => {
       where("creatorId", "==", userObj.uid),
       orderBy("createdAt", "desc")
     );
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc, index) => {
-      let docdata = querySnapshot.docs.map((doc) => doc.data());
-      setMyPostings(docdata);
+    onSnapshot(q, (querySnapshot) => {
+      const docData = querySnapshot.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      });
+      setMyPostings(docData);
     });
   };
 

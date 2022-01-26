@@ -81,7 +81,6 @@ const PostingForm = ({ userObj }) => {
       setAttachment(result);
     };
     reader.readAsDataURL(theFile);
-    console.log(attachment);
   };
 
   const onClearAttachment = () => {
@@ -100,8 +99,7 @@ const PostingForm = ({ userObj }) => {
           required
         />
         <input type="submit" value="✏️" />
-        <input type="file" accept="image/*" onChange={onFileChange} />
-
+        <input type="file" id="file" accept="image/*" onChange={onFileChange} />
         {attachment && (
           <div>
             <img src={attachment} width="100px" />

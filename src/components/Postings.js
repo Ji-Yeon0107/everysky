@@ -3,42 +3,35 @@ import Posting from "components/Posting";
 import firebase from "fbase";
 import {
   getFirestore,
-  onSnapshot,
   collection,
   query,
   getDocs,
   orderBy,
+  onSnapshot,
 } from "firebase/firestore";
 
 const Postings = ({ userObj }) => {
   const firestore = getFirestore();
   const [postings, setPostings] = useState([]);
 
-  useEffect(() => {
-    onSnapshot(collection(firestore, "postings"), (snapshot) => {
-      //모든문서를 map으로 돌려서 array를 만든다.
-      const postingArray = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      //할당해준다
-      setPostings(postingArray);
-    });
-  }, []);
-
-  const orderPostings = async () => {
+  const getPostings = async () => {
     const q = query(
       collection(firestore, "postings"),
       orderBy("createdAt", "desc")
     );
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc, index) => {
-      let docdata = querySnapshot.docs.map((doc) => doc.data());
-      setPostings(docdata);
+    onSnapshot(q, (querySnapshot) => {
+      const docData = querySnapshot.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      });
+      setPostings(docData);
     });
   };
+
   useEffect(() => {
-    orderPostings();
+    getPostings();
   }, []);
 
   return (

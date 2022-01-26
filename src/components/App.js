@@ -32,6 +32,7 @@ function App() {
     setUserObj({
       displayName: user.displayName,
       uid: user.uid,
+      photoURL: user.photoURL,
     });
   };
 
@@ -46,7 +47,7 @@ function App() {
           refreshUser={refreshUser}
         />
       ) : (
-        <div>일상 기록</div>
+        <div className="mainTitle">일상 기록</div>
       )}
     </>
   );

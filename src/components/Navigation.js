@@ -24,18 +24,16 @@ const Navigation = ({ userObj, isLoggedIn }) => {
       <ul className="navi">
         <li>
           <div>
-            {isLoggedIn ? (
+            {userObj !== null ? (
               <img
                 src={userObj.photoURL}
-                width="50px"
-                height="50px"
+                className="profilephoto"
                 alt="profile"
               />
             ) : (
               <img
                 src="./anonymous.png"
-                width="50px"
-                height="50px"
+                className="profilephoto"
                 alt="profile"
               />
             )}
@@ -43,7 +41,9 @@ const Navigation = ({ userObj, isLoggedIn }) => {
           {isLoggedIn ? (
             <>
               <Link to="/profile">{userProfile}님 반가워요</Link>
-              <button onClick={onLogOutClick}>Log Out</button>
+              <button className="logout-button" onClick={onLogOutClick}>
+                Log Out
+              </button>
             </>
           ) : (
             <Link to="/login">{userProfile}님 반가워요</Link>

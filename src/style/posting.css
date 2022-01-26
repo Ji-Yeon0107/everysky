@@ -2,7 +2,7 @@
   border-radius: 15px;
   box-shadow: -1px 2px 8px rgba(10, 10, 0, 0.3);
   padding: 15px;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   position: relative;
   top: 0;
   left: 0;
@@ -18,22 +18,19 @@
 }
 .posting-button {
   position: absolute;
-  top: 70%;
-  left: 85%;
+  top: 45%;
+  left: 75%;
+}
+.posting-button button {
+  margin-left: 8px;
 }
 
 /* PostingForm */
 .posting-form {
   margin-bottom: 18px;
 }
-.posting-form input {
-  height: 40px;
-}
 .posting-form input[type="text"] {
-  border: none;
-  box-shadow: -1px 2px 8px rgba(10, 10, 0, 0.3);
-  border-radius: 15px;
-  width: 88%;
+  width: 85%;
   text-indent: 15px;
   margin-bottom: 10px;
   margin-right: 3%;
@@ -44,4 +41,14 @@
   border-radius: 50%;
   box-shadow: -1px 2px 8px rgba(10, 10, 0, 0.3);
   border: none;
+}
+.edit {
+  display: inline;
+}
+.edit input[type="text"] {
+  width: 70%;
+}
+.edit-button {
+  display: inline;
+  margin-left: 8px;
 }
