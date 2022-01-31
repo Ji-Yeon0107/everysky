@@ -4,7 +4,7 @@ import { getFirestore, deleteDoc, updateDoc, doc } from "firebase/firestore";
 import { getStorage, deleteObject, ref } from "firebase/storage";
 import "style/posting.css";
 
-const Posting = ({ isOwner, posting }) => {
+const Posting = ({ isOwner, posting, userObj }) => {
   const firestore = getFirestore();
   const firebaseStorage = getStorage();
   const [editing, setEditing] = useState(false);
@@ -40,7 +40,7 @@ const Posting = ({ isOwner, posting }) => {
     event.preventDefault();
     await updateDoc(doc(firestore, "postings", `${posting.id}`), {
       text: postingEditing,
-      creator: posting.creator,
+      creator: userObj.displayName,
     });
 
     setEditing(false);
