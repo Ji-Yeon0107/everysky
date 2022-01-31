@@ -18,21 +18,21 @@ const Posting = ({ isOwner, posting }) => {
     // console.log(modalImage.className);
   };
 
-  const getTimegap = (a) => {
-    var minutegap = Math.floor((Date.now() - a.createdAt) / 60000);
-    var hourgap = Math.floor((Date.now() - a.createdAt) / 3600000);
-    if (Date.now() - a.createdAt < 86400000) {
-      if (minutegap < 60) {
-        if (minutegap < 0) {
-          return <p> 0분 전</p>;
-        } else {
-          return <p>{minutegap}분 전</p>;
-        }
-      } else {
-        return <p>{hourgap}시간 전</p>;
-      }
+  const getTimegap = (posting) => {
+    const msgap = Date.now() - posting.createdAt;
+    const minutegap = Math.floor(msgap / 60000);
+    const hourgap = Math.floor(msgap / 3600000);
+
+    if (msgap < 0) {
+      return <p>0분전</p>;
+    }
+    if (hourgap > 24) {
+      return <p>{posting.createdDate}</p>;
+    }
+    if (minutegap > 60) {
+      return <p>{hourgap}시간 전</p>;
     } else {
-      return <p>{a.createdDate}</p>;
+      return <p>{minutegap}분 전</p>;
     }
   };
 
